@@ -53,106 +53,71 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jbtnUsuarios" min="-2" pref="411" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jbtnProducto" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="jscrollPanePrincipal" min="-2" pref="845" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jtoolBarPrincipal" min="-2" pref="1040" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="jscrollPanePrincipal" min="-2" pref="474" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jbtnVenta" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jbtnAgenda" pref="495" max="32767" attributes="0"/>
                           <Component id="jbtnClientes" max="32767" attributes="0"/>
-                          <Component id="jbtnMascotas" max="32767" attributes="0"/>
-                          <Component id="jbtnUsuarios" max="32767" attributes="0"/>
-                          <Component id="jbtnProducto" max="32767" attributes="0"/>
-                          <Component id="jbtnAgenda" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jbtnAgenda1" min="-2" pref="273" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jbtnMascotas" pref="445" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="jbtnAgenda1" min="-2" pref="409" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
+                  <Component id="jbtnVenta" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jtoolBarPrincipal" min="-2" pref="63" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jbtnVenta" min="-2" pref="80" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jbtnClientes" min="-2" pref="80" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jbtnVenta" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jbtnMascotas" min="-2" pref="80" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jbtnClientes" pref="319" max="32767" attributes="0"/>
+                          <Component id="jbtnMascotas" max="32767" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jbtnUsuarios" min="-2" pref="80" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jbtnProducto" min="-2" pref="80" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jbtnAgenda" min="-2" pref="80" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jbtnAgenda1" min="-2" pref="80" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jbtnAgenda" min="-2" pref="231" max="-2" attributes="0"/>
+                          <Component id="jbtnAgenda1" min="-2" pref="208" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <Component id="jscrollPanePrincipal" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jscrollPanePrincipal" min="-2" pref="613" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jbtnUsuarios" pref="279" max="32767" attributes="0"/>
+                          <Component id="jbtnProducto" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace pref="527" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JToolBar" name="jtoolBarPrincipal">
-      <Properties>
-        <Property name="floatable" type="boolean" value="false"/>
-        <Property name="rollover" type="boolean" value="true"/>
-        <Property name="focusable" type="boolean" value="false"/>
-        <Property name="requestFocusEnabled" type="boolean" value="false"/>
-      </Properties>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JButton" name="jbtnNuevo">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Nuevo"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jbtnNuevo1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Editar"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jbtnNuevo2">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Eliminar"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jbtnNuevo3">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Inicio"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jbtnNuevo4">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Filtrar"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
     <Container class="javax.swing.JScrollPane" name="jscrollPanePrincipal">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
@@ -262,7 +227,7 @@
     <Component class="javax.swing.JButton" name="jbtnAgenda1">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/imagenes/Historial_Venta.png"/>
+          <Image iconType="3" name="/imagenes/cerrar-sesion.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value=" "/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">

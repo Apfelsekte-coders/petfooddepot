@@ -32,12 +32,6 @@ public class FramePrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jtoolBarPrincipal = new javax.swing.JToolBar();
-        jbtnNuevo = new javax.swing.JButton();
-        jbtnNuevo1 = new javax.swing.JButton();
-        jbtnNuevo2 = new javax.swing.JButton();
-        jbtnNuevo3 = new javax.swing.JButton();
-        jbtnNuevo4 = new javax.swing.JButton();
         jscrollPanePrincipal = new javax.swing.JScrollPane();
         jbtnVenta = new javax.swing.JButton();
         jbtnClientes = new javax.swing.JButton();
@@ -57,38 +51,6 @@ public class FramePrincipal extends javax.swing.JFrame {
                 formWindowClosed(evt);
             }
         });
-
-        jtoolBarPrincipal.setFloatable(false);
-        jtoolBarPrincipal.setRollover(true);
-        jtoolBarPrincipal.setFocusable(false);
-        jtoolBarPrincipal.setRequestFocusEnabled(false);
-
-        jbtnNuevo.setText("Nuevo");
-        jtoolBarPrincipal.add(jbtnNuevo);
-
-        jbtnNuevo1.setText("Editar");
-        jbtnNuevo1.setFocusable(false);
-        jbtnNuevo1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbtnNuevo1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jtoolBarPrincipal.add(jbtnNuevo1);
-
-        jbtnNuevo2.setText("Eliminar");
-        jbtnNuevo2.setFocusable(false);
-        jbtnNuevo2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbtnNuevo2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jtoolBarPrincipal.add(jbtnNuevo2);
-
-        jbtnNuevo3.setText("Inicio");
-        jbtnNuevo3.setFocusable(false);
-        jbtnNuevo3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbtnNuevo3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jtoolBarPrincipal.add(jbtnNuevo3);
-
-        jbtnNuevo4.setText("Filtrar");
-        jbtnNuevo4.setFocusable(false);
-        jbtnNuevo4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jbtnNuevo4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jtoolBarPrincipal.add(jbtnNuevo4);
 
         jbtnVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Venta_icon.png"))); // NOI18N
         jbtnVenta.setText(" ");
@@ -150,7 +112,7 @@ public class FramePrincipal extends javax.swing.JFrame {
             }
         });
 
-        jbtnAgenda1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Historial_Venta.png"))); // NOI18N
+        jbtnAgenda1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cerrar-sesion.png"))); // NOI18N
         jbtnAgenda1.setText(" ");
         jbtnAgenda1.setMaximumSize(new java.awt.Dimension(85, 60));
         jbtnAgenda1.setPreferredSize(new java.awt.Dimension(85, 60));
@@ -181,45 +143,51 @@ public class FramePrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtoolBarPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 1040, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jscrollPanePrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jbtnVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbtnClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbtnMascotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbtnUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbtnProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbtnAgenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbtnAgenda1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jbtnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbtnProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jscrollPanePrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 845, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jbtnAgenda, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
+                            .addComponent(jbtnClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbtnMascotas, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jbtnAgenda1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(jbtnVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jtoolBarPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbtnVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jbtnClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbtnVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtnMascotas, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jbtnClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+                            .addComponent(jbtnMascotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbtnAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbtnAgenda1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jscrollPanePrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtnProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtnAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtnAgenda1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jscrollPanePrincipal))
-                .addContainerGap(527, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbtnUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                            .addComponent(jbtnProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
 
         pack();
@@ -231,11 +199,14 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnVentaActionPerformed
 
     private void jbtnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnProductoActionPerformed
-        // TODO add your handling code here:
+        DialogProducto dialogProducto = new DialogProducto( this, true );
+        dialogProducto.setVisible( true );
     }//GEN-LAST:event_jbtnProductoActionPerformed
 
     private void jbtnAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAgendaActionPerformed
-        // TODO add your handling code here:
+        DialogAgenda dialogAgenda = new DialogAgenda( this, true );
+        dialogAgenda.setVisible( true );
+        
     }//GEN-LAST:event_jbtnAgendaActionPerformed
 
     private void jbtnAgenda1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAgenda1ActionPerformed
@@ -253,7 +224,8 @@ public class FramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnMascotasActionPerformed
 
     private void jbtnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUsuariosActionPerformed
-        // TODO add your handling code here:
+        DialogUsuarios dialogUsuarios = new DialogUsuarios( this, true );
+        dialogUsuarios.setVisible( true );
     }//GEN-LAST:event_jbtnUsuariosActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -312,15 +284,9 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jbtnAgenda1;
     private javax.swing.JButton jbtnClientes;
     private javax.swing.JButton jbtnMascotas;
-    private javax.swing.JButton jbtnNuevo;
-    private javax.swing.JButton jbtnNuevo1;
-    private javax.swing.JButton jbtnNuevo2;
-    private javax.swing.JButton jbtnNuevo3;
-    private javax.swing.JButton jbtnNuevo4;
     private javax.swing.JButton jbtnProducto;
     private javax.swing.JButton jbtnUsuarios;
     private javax.swing.JButton jbtnVenta;
     private javax.swing.JScrollPane jscrollPanePrincipal;
-    private javax.swing.JToolBar jtoolBarPrincipal;
     // End of variables declaration//GEN-END:variables
 }
