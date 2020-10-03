@@ -5,6 +5,14 @@
  */
 package principal;
 
+import SQL.ConnectionDB;
+import SQL.Sentencias;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static principal.DialogProducto.MOSTRAR_PRODUCTOS;
+
 /**
  *
  * @author msi gs63
@@ -14,11 +22,55 @@ public class DialogClientes extends javax.swing.JDialog {
     /**
      * Creates new form DialogClientes
      */
+    String filtro="";
+    String orden=" order by cliente_nombre";
+    String mostrarClientes="SELECT * FROM clientes WHERE cliente_estado = '1' and cliente_nombre not like 'Invitado' ";
+    private DefaultTableModel dtmClientes;
+    DialogCargando dc;
+    FramePrincipal frmprincipal;
+    String datos[];
+    
     public DialogClientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        frmprincipal= (FramePrincipal) parent;
+        datos= new String[5];
+        txtFiltro.setVisible(false);
+        btnFiltro.setVisible(false);
     }
 
+    
+    public void desplegarRegistros() {
+        
+        Object[] fila = new Object[7];
+        ResultSet rs=null;
+        dtmClientes = new DefaultTableModel();
+            dtmClientes.setColumnIdentifiers(new Object[]{"ID", "Nombre", "Teléfono", "E-mail","Colonia","Puntos","Sesion"});
+        try {
+            ConnectionDB.getInstance().connectDB();
+             rs=Sentencias.desplegar(mostrarClientes+filtro+orden);
+            while (rs.next()) {
+                
+                fila[0] = rs.getInt("cliente_id");
+                fila[1] = rs.getString("cliente_nombre");
+                fila[2] = rs.getString("cliente_telefono");
+                fila[3] = rs.getString("cliente_correo");
+                fila[4] = rs.getString("cliente_colonia");
+                fila[5] = rs.getInt("cliente_puntos");
+                fila[6] = rs.getInt("sesion_id");
+                dtmClientes.addRow(fila);  
+            }
+            rs.close();
+            jtblClientes.setModel(dtmClientes);
+        } catch (SQLException ex) {
+            System.out.println("Nel " + ex);
+            
+        }
+    }
+    public String[] getDatos(){
+    return datos;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,29 +84,41 @@ public class DialogClientes extends javax.swing.JDialog {
         jtblClientes = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jbtnVovler = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jtxtNombreCliente = new javax.swing.JTextField();
-        jbtnBuscar = new javax.swing.JButton();
+        txtFiltro = new javax.swing.JTextField();
+        btnFiltro = new javax.swing.JButton();
         jbtnEditar = new javax.swing.JButton();
         jbtnEditar1 = new javax.swing.JButton();
         jbtnEditar2 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cboFiltro = new javax.swing.JComboBox<String>();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        cboOrden = new javax.swing.JComboBox<String>();
+        btnRecarga = new javax.swing.JButton();
+        btnOrdenar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jtblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nombre", "Teléfono", "E-mail", "Colonia", "Puntos", "Sesión"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jtblClientes);
 
         jLabel4.setFont(new java.awt.Font("Verdana", 0, 36)); // NOI18N
@@ -67,7 +131,7 @@ public class DialogClientes extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(403, 403, 403)
                 .addComponent(jLabel4)
-                .addContainerGap(382, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -77,31 +141,79 @@ public class DialogClientes extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jbtnVovler.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Regresar.png"))); // NOI18N
-        jbtnVovler.setText(" ");
+        txtFiltro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFiltroActionPerformed(evt);
+            }
+        });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Nombre:");
-
-        jtxtNombreCliente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jtxtNombreCliente.setText(" ");
-
-        jbtnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Buscar.png"))); // NOI18N
+        btnFiltro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/filtrar.png"))); // NOI18N
+        btnFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltroActionPerformed(evt);
+            }
+        });
 
         jbtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Editar.png"))); // NOI18N
         jbtnEditar.setText(" ");
+        jbtnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnEditarActionPerformed(evt);
+            }
+        });
 
         jbtnEditar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Eliminar.png"))); // NOI18N
         jbtnEditar1.setText(" ");
+        jbtnEditar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnEditar1ActionPerformed(evt);
+            }
+        });
 
         jbtnEditar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Agregar.png"))); // NOI18N
         jbtnEditar2.setText(" ");
+        jbtnEditar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnEditar2ActionPerformed(evt);
+            }
+        });
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboFiltro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cboFiltro.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- Seleccione un filtro --", "Nombre", "Colonia" }));
+        cboFiltro.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboFiltroItemStateChanged(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Filtrar por:");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setText("Ordenar por:");
+
+        cboOrden.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cboOrden.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Nombre", "Colonia", "Puntos" }));
+        cboOrden.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboOrdenItemStateChanged(evt);
+            }
+        });
+
+        btnRecarga.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/actualizar.png"))); // NOI18N
+        btnRecarga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecargaActionPerformed(evt);
+            }
+        });
+
+        btnOrdenar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/lista.png"))); // NOI18N
+        btnOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,30 +221,39 @@ public class DialogClientes extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jbtnVovler, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(15, 15, 15)
-                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtxtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jbtnBuscar)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(73, 73, 73))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(25, 25, 25)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(cboFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btnFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cboOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btnRecarga)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbtnEditar2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbtnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtnEditar1)))
+                        .addComponent(jbtnEditar1)
+                        .addGap(10, 10, 10)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -140,29 +261,147 @@ public class DialogClientes extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jbtnEditar)
+                        .addComponent(jbtnEditar1)
+                        .addComponent(jbtnEditar2))
+                    .addComponent(btnRecarga)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(cboOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnEditar)
-                    .addComponent(jbtnEditar1)
-                    .addComponent(jbtnEditar2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbtnBuscar)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(jtxtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jbtnVovler, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        dc= new DialogCargando(this, true,"clientes");
+        dc.setVisible(true);  
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jbtnEditar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEditar2ActionPerformed
+        // TODO add your handling code here:
+        DialogAgregarCliente dacli = new DialogAgregarCliente(frmprincipal,this, 1,true);
+        dacli.setVisible(true);
+        
+        
+    }//GEN-LAST:event_jbtnEditar2ActionPerformed
+
+    private void jbtnEditar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEditar1ActionPerformed
+        // TODO add your handling code here:
+        int index = jtblClientes.getSelectedRow();
+
+        if (index == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un cliente a eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int input = JOptionPane.showConfirmDialog(null,
+                "¿Está seguro de que quiere eliminar este cliente?\n NOTA: Las mascotas de este cliente también serán eliminadas",
+                "Eliminar Cliente",JOptionPane.YES_NO_OPTION);
+            if(input==0){
+               int id= Integer.parseInt(jtblClientes.getValueAt(index, 0)+"");
+            try {
+                Sentencias.actualizarSesion(frmprincipal.getIdSesion(), Sentencias.getFechaHora());
+                Sentencias.eliminarCliente(id);
+                dtmClientes.removeRow(index);
+                jtblClientes.setModel(dtmClientes);
+            } catch (Exception ex) {
+                    System.out.println("No eliminó producto");
+            }
+          }
+        }
+    }//GEN-LAST:event_jbtnEditar1ActionPerformed
+
+    private void jbtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEditarActionPerformed
+        // TODO add your handling code here:
+        int index = jtblClientes.getSelectedRow();
+
+        if (index == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un cliente para editar", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+               datos[0]=jtblClientes.getValueAt(index, 0)+"";
+               datos[1]=jtblClientes.getValueAt(index, 1)+"";
+               datos[2]=jtblClientes.getValueAt(index, 2)+"";
+               datos[3]=jtblClientes.getValueAt(index, 3)+"";
+               datos[4]=jtblClientes.getValueAt(index, 4)+"";
+               DialogAgregarCliente dacli = new DialogAgregarCliente(frmprincipal,this, 2,true);
+               dacli.setVisible(true);
+           
+          
+        }
+    }//GEN-LAST:event_jbtnEditarActionPerformed
+
+    private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
+        // TODO add your handling code here:
+        switch(cboFiltro.getSelectedIndex()){
+            case 1: filtro="and cliente_nombre like '%"+txtFiltro.getText().trim()+"%'";
+                break;
+            case 2: filtro="and cliente_colonia like '%"+txtFiltro.getText().trim()+"%'";
+                break;
+         }
+        System.out.println(mostrarClientes+filtro+orden);
+        dc= new DialogCargando(this, true, "clientes");
+        dc.setVisible(true);
+    }//GEN-LAST:event_btnFiltroActionPerformed
+
+    private void cboFiltroItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboFiltroItemStateChanged
+        // TODO add your handling code here:
+        int index=cboFiltro.getSelectedIndex();
+        if(index!=0){
+        txtFiltro.setVisible(true);
+        btnFiltro.setVisible(true);
+        }else{
+        txtFiltro.setVisible(false);
+        btnFiltro.setVisible(false);
+        }
+    }//GEN-LAST:event_cboFiltroItemStateChanged
+
+    private void txtFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFiltroActionPerformed
+
+    private void cboOrdenItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboOrdenItemStateChanged
+        // TODO add your handling code here:
+        switch(cboOrden.getSelectedIndex()){
+            case 0: orden=" order by cliente_nombre"; break;
+            case 1: orden=" order by cliente_colonia"; break;
+            case 2: orden=" order by cliente_puntos desc"; break;
+        }
+    }//GEN-LAST:event_cboOrdenItemStateChanged
+
+    private void btnRecargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargaActionPerformed
+        // TODO add your handling code here:
+        txtFiltro.setText("");
+         txtFiltro.setVisible(false);
+         btnFiltro.setVisible(false);
+         cboFiltro.setSelectedIndex(0);
+         cboOrden.setSelectedIndex(0);
+         dc = new DialogCargando(this, true, "clientes");
+        dc.setVisible(true);
+    }//GEN-LAST:event_btnRecargaActionPerformed
+
+    private void btnOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarActionPerformed
+        // TODO add your handling code here:
+        dc = new DialogCargando(this, true, "clientes");
+        dc.setVisible(true);
+    }//GEN-LAST:event_btnOrdenarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -207,18 +446,20 @@ public class DialogClientes extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnFiltro;
+    private javax.swing.JButton btnOrdenar;
+    private javax.swing.JButton btnRecarga;
+    private javax.swing.JComboBox<String> cboFiltro;
+    private javax.swing.JComboBox<String> cboOrden;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton jbtnBuscar;
     private javax.swing.JButton jbtnEditar;
     private javax.swing.JButton jbtnEditar1;
     private javax.swing.JButton jbtnEditar2;
-    private javax.swing.JButton jbtnVovler;
     private javax.swing.JTable jtblClientes;
-    private javax.swing.JTextField jtxtNombreCliente;
+    private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 }

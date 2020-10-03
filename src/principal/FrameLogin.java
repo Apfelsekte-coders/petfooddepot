@@ -4,6 +4,9 @@ package principal;
 import SQL.ConnectionDB;
 import SQL.Sentencias;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,25 +14,49 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class FrameLogin extends javax.swing.JFrame {
     private int id_sesion;
+    DialogCargando dc ;
    
     public FrameLogin() {
          initComponents();
-          /*try{
-         String url="jdbc:mysql://www.petfooddepotmx.com:3306/u760520066_petfooddepot";
-         String user="u760520066_petAdmin";
-         String pass="4guileraAdmin";
-         Connection con= DriverManager.getConnection(url, user, pass);
-         jLabel3.setText("Conectado");
-        }catch(Exception e){
-              jLabel3.setText("No conectado");
-        }*/
+        //setIconImage(new ImageIcon(getClass().getResource("../imagenes/pet_ico.png")).getImage());
         
+    }
+    @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/pet_ico.png"));
+
+
+        return retValue;
+    }
+    public void entrar(){
+    jLabel4.setText("");
+            jLabel5.setText("");
+         String usuario = jtxtUsuario.getText().trim();
+        char[] letras = jpwdContrasegna.getPassword();
+        String pass = "";
+
+        for (int i = 0; i < letras.length; i++) {
+            pass += letras[i];
+        }
         
+        id_sesion= Sentencias.iniciarSesion(usuario, pass, Sentencias.getFechaHora());
+        if(id_sesion!=0){
+            FramePrincipal principal= new FramePrincipal(id_sesion);
+            principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            principal.setVisible(true);
+            this.setVisible(false);
+        }else{
+            jLabel4.setText("Usuario o contraseña incorrectos");
+            jLabel4.setForeground(Color.red);
+            jLabel5.setText("NOTA: Verifica la conexión");
+             jLabel5.setForeground(Color.red);
+        }
     }
 
     /**
@@ -53,6 +80,7 @@ public class FrameLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ingreso");
+        setIconImage(getIconImage());
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -79,6 +107,11 @@ public class FrameLogin extends javax.swing.JFrame {
 
         jbtnCancelar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jbtnCancelar.setText("Cancelar");
+        jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCancelarActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Conectando...");
 
@@ -147,35 +180,17 @@ public class FrameLogin extends javax.swing.JFrame {
 
     private void jbtnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEntrarActionPerformed
         // TODO add your handling code here:
-            jLabel4.setText("");
-            jLabel5.setText("");
-         String usuario = jtxtUsuario.getText().trim();
-        char[] letras = jpwdContrasegna.getPassword();
-        String pass = "";
-
-        for (int i = 0; i < letras.length; i++) {
-            pass += letras[i];
-        }
-        id_sesion= Sentencias.iniciarSesion(usuario, pass, Sentencias.getFechaHora());
-        if(id_sesion!=0){
-            FramePrincipal principal= new FramePrincipal(id_sesion);
-            principal.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            principal.setVisible(true);
-            dispose();
-        }else{
-            jLabel4.setText("Usuario o contraseña incorrectos");
-            jLabel4.setForeground(Color.red);
-            jLabel5.setText("NOTA: Verifica la conexión");
-             jLabel5.setForeground(Color.red);
-        }
+        dc= new DialogCargando(this, true,"login");
+        dc.setVisible(true);  
         
 
         
     }//GEN-LAST:event_jbtnEntrarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-      
+       this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         ConnectionDB.getInstance().connectDB();
+         
         if(ConnectionDB.getInstance().isConnected()){
          jLabel3.setText("Conectado");
         jLabel3.setForeground(Color.GREEN);
@@ -184,11 +199,18 @@ public class FrameLogin extends javax.swing.JFrame {
             jLabel3.setText("Error de conexión");
                  jLabel3.setForeground(Color.RED);
         }
+        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_formWindowOpened
 
     private void jpwdContrasegnaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpwdContrasegnaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jpwdContrasegnaActionPerformed
+
+    private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
+        // TODO add your handling code here:
+        ConnectionDB.getInstance().disconnect();
+        dispose();
+    }//GEN-LAST:event_jbtnCancelarActionPerformed
 
     /**
      * @param args the command line arguments

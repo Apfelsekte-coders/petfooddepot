@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,6 +34,7 @@ public class ConnectionDB {
         try {
             connect= DriverManager.getConnection(url, user, pass);
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error"+ex);
             Logger.getLogger(ConnectionDB.class.getName()).log(Level.SEVERE, null, ex);
         }
      }
